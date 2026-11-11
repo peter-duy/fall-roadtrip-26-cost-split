@@ -205,6 +205,21 @@
       .sheet-link:active { background: var(--surface-2); }
       .sheet-link .arrow { margin-left: 8px; }
 
+      /* ---------- Embedded sheet ---------- */
+      .sheet-frame {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--surface);
+      }
+      .sheet-frame iframe {
+        display: block;
+        width: 100%;
+        height: 680px;
+        border: 0;
+      }
+      .sheet-frame + .sheet-link { margin-top: 12px; }
+
       @media (max-width: 380px) {
         .stat .big { font-size: 29px; }
         h1 { font-size: 26px; }
@@ -390,8 +405,13 @@
         <p><strong>The car charge is a pending estimate.</strong> If the final van bill comes in different from $746, the total and everyone's share will move.</p>
       </div>
 
+      <h2>Full breakdown</h2>
+      <div class="sheet-frame">
+        <iframe src="https://docs.google.com/spreadsheets/d/1occU4chtG9PcU7LeQ8I4SoRv9hxr_G7saU5CNwzbxyk/preview" title="Fall Roadtrip '26 — Cost Split spreadsheet" loading="lazy" allowfullscreen></iframe>
+      </div>
+
       <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1occU4chtG9PcU7LeQ8I4SoRv9hxr_G7saU5CNwzbxyk/edit?usp=drivesdk" target="_blank" rel="noopener">
-        See the full breakdown in Google Sheets <span class="arrow" aria-hidden="true">→</span>
+        Open the Sheet <span class="arrow" aria-hidden="true">→</span>
       </a>
     </main>
   </body>
