@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Fall Roadtrip '26 — Cost Split</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f4f6f3;
+        --surface: #ffffff;
+        --surface-2: #eef2ec;
+        --ink: #17251c;
+        --ink-soft: #4c5a50;
+        --line: #d9e0d7;
+        --forest: #1d4d33;
+        --forest-ink: #ffffff;
+        --amber: #b3540a;
+        --amber-bg: #fdf0e2;
+        --amber-ink: #8a3f06;
+        --green-bg: #e7f0e7;
+        --green-ink: #1d4d33;
+        --radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #10160f;
+          --surface: #1a221a;
+          --surface-2: #222b21;
+          --ink: #eef3ec;
+          --ink-soft: #a9b8a8;
+          --line: #33402f;
+          --forest: #2e6b47;
+          --forest-ink: #f2f7f1;
+          --amber: #e08a3c;
+          --amber-bg: #3a2a17;
+          --amber-ink: #f2b877;
+          --green-bg: #22382a;
+          --green-ink: #a8d3b2;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.45;
+      }
+      main {
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 28px 18px 48px;
+      }
+      h1 {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.12;
+        margin: 0 0 6px;
+      }
+      .sub {
+        color: var(--ink-soft);
+        font-size: 16px;
+        margin: 0 0 24px;
+      }
+      h2 {
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        margin: 34px 0 12px;
+      }
+      h2:first-of-type { margin-top: 28px; }
+
+      /* ---------- Big numbers ---------- */
+      .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .stat {
+        background: var(--forest);
+        color: var(--forest-ink);
+        border-radius: var(--radius);
+        padding: 18px 16px 16px;
+      }
+      .stat.alt {
+        background: var(--surface);
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+      .stat .label {
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        opacity: 0.85;
+        margin: 0 0 6px;
+      }
+      .stat .big {
+        font-size: 34px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        margin: 0;
+      }
+      .stat .note {
+        font-size: 13px;
+        margin: 8px 0 0;
+        opacity: 0.85;
+      }
+
+      /* ---------- Lists ---------- */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 13px 16px;
+      }
+      .row + .row { border-top: 1px solid var(--line); }
+      .row .what { min-width: 0; }
+      .row .name {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .row .detail {
+        color: var(--ink-soft);
+        font-size: 13.5px;
+        margin-top: 1px;
+      }
+      .row .amt {
+        font-weight: 800;
+        font-size: 17px;
+        white-space: nowrap;
+      }
+      .row.total {
+        background: var(--surface-2);
+      }
+      .row.total .name, .row.total .amt { font-size: 18px; }
+
+      .badge {
+        display: inline-block;
+        background: var(--amber-bg);
+        color: var(--amber-ink);
+        font-size: 11.5px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 999px;
+        padding: 2px 8px;
+        margin-left: 6px;
+        vertical-align: 2px;
+      }
+
+      /* ---------- Settlement ---------- */
+      .send .amt { font-size: 21px; }
+      .send .name { font-size: 17px; }
+      .send.zero .amt { color: var(--ink-soft); }
+      .settle-note {
+        background: var(--green-bg);
+        color: var(--green-ink);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        margin-top: 12px;
+        font-size: 15px;
+      }
+      .settle-note strong { font-weight: 800; }
+
+      /* ---------- Notes & link ---------- */
+      .notes {
+        margin-top: 34px;
+        font-size: 14.5px;
+        color: var(--ink-soft);
+      }
+      .notes p { margin: 0 0 10px; }
+      .notes strong { color: var(--ink); }
+      .sheet-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        margin-top: 22px;
+        padding: 12px 16px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        color: var(--ink);
+        font-weight: 700;
+        font-size: 16px;
+        text-decoration: none;
+      }
+      .sheet-link:active { background: var(--surface-2); }
+      .sheet-link .arrow { margin-left: 8px; }
+
+      @media (max-width: 380px) {
+        .stat .big { font-size: 29px; }
+        h1 { font-size: 26px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Fall Roadtrip '26 — Cost Split</h1>
+      <p class="sub">Alabama trip, split 9 ways. Everything settles through Arwen.</p>
+
+      <section class="stats" aria-label="Totals">
+        <div class="stat">
+          <p class="label">Trip total</p>
+          <p class="big">$2,097.42</p>
+          <p class="note">All shared charges combined</p>
+        </div>
+        <div class="stat alt">
+          <p class="label">Your share</p>
+          <p class="big">$233.05</p>
+          <p class="note">Per person, 9 people</p>
+        </div>
+      </section>
+
+      <h2>The charges</h2>
+      <div class="card">
+        <div class="row">
+          <div class="what">
+            <span class="name">Car (rental van)</span><span class="badge">Pending</span>
+            <div class="detail">Paid by Arwen · ~$746 based on email, not final yet</div>
+          </div>
+          <div class="amt">$746.00</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Airbnb (cabin)</span>
+            <div class="detail">Paid by Arwen</div>
+          </div>
+          <div class="amt">$685.12</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Gas</span>
+            <div class="detail">Paid by Arwen</div>
+          </div>
+          <div class="amt">$70.20</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Publix wings / dinner</span>
+            <div class="detail">Paid by Arwen</div>
+          </div>
+          <div class="amt">$89.82</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Gas</span>
+            <div class="detail">Paid by Tiff</div>
+          </div>
+          <div class="amt">$228.40</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Walmart</span>
+            <div class="detail">Paid by Tiff</div>
+          </div>
+          <div class="amt">$116.76</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Walmart delivery to cabin</span>
+            <div class="detail">Paid by Kayla</div>
+          </div>
+          <div class="amt">$38.61</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">DeSoto campsite</span>
+            <div class="detail">Paid by Arwen</div>
+          </div>
+          <div class="amt">$122.51</div>
+        </div>
+        <div class="row total">
+          <div class="what"><span class="name">Total</span></div>
+          <div class="amt">$2,097.42</div>
+        </div>
+      </div>
+
+      <h2>Not part of the split</h2>
+      <div class="card">
+        <div class="row">
+          <div class="what">
+            <span class="name">Chow King</span><span class="badge">Waived</span>
+            <div class="detail">Paid by Kevin · Kevin covers it himself — nobody owes anything for it</div>
+          </div>
+          <div class="amt">$158.00</div>
+        </div>
+      </div>
+
+      <h2>Already paid</h2>
+      <div class="card">
+        <div class="row">
+          <div class="what"><span class="name">Arwen</span></div>
+          <div class="amt">$1,713.65</div>
+        </div>
+        <div class="row">
+          <div class="what"><span class="name">Tiff</span></div>
+          <div class="amt">$345.16</div>
+        </div>
+        <div class="row">
+          <div class="what"><span class="name">Kayla</span></div>
+          <div class="amt">$38.61</div>
+        </div>
+      </div>
+
+      <h2>Who sends what to Arwen</h2>
+      <div class="card send">
+        <div class="row">
+          <div class="what">
+            <span class="name">Kevin</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.02</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Eli</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.05</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Tali</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.05</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Tim</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.05</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Kaden</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.05</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Kady</span>
+            <div class="detail">Send to Arwen</div>
+          </div>
+          <div class="amt">$233.05</div>
+        </div>
+        <div class="row">
+          <div class="what">
+            <span class="name">Kayla</span>
+            <div class="detail">Send to Arwen · already paid $38.61 toward her share</div>
+          </div>
+          <div class="amt">$194.44</div>
+        </div>
+        <div class="row zero">
+          <div class="what">
+            <span class="name">Tiff</span>
+            <div class="detail">Already overpaid — nothing to send</div>
+          </div>
+          <div class="amt">$0</div>
+        </div>
+      </div>
+
+      <div class="settle-note">
+        Arwen collects <strong>$1,592.71</strong> in total, sends <strong>$112.11</strong> back to Tiff
+        (refund of her overpay), and keeps <strong>$1,480.60</strong> — which leaves her exactly at her own $233.05 share.
+      </div>
+
+      <div class="notes">
+        <p><strong>Kevin's share is $233.02, not $233.05</strong> — the 3&cent; less makes the nine shares add up to the $2,097.42 total exactly.</p>
+        <p><strong>The car charge is a pending estimate.</strong> If the final van bill comes in different from $746, the total and everyone's share will move.</p>
+      </div>
+
+      <a class="sheet-link" href="https://docs.google.com/spreadsheets/d/1occU4chtG9PcU7LeQ8I4SoRv9hxr_G7saU5CNwzbxyk/edit?usp=drivesdk" target="_blank" rel="noopener">
+        See the full breakdown in Google Sheets <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </main>
+  </body>
+</html>
